@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/app.css">
+    <title>{% block title%} {% endblock %}</title>
+</head>
+<body>
+    <nav class="navbar">
+        {% if not g.user %}
+            <a href="/signup">Sign up</a>
+            <a href="/login">Log in</a>
+        {% else %}
+            <a href="/">Home</a>
+            <a href="/sit">New Sit</a>
+            <a href="/history">History</a>
+            <a href="/logout">Log out</a>
+      {% endif %}
+    </nav>
+
+{% block content %}
+{% endblock %}
+</body>
+</html>
