@@ -2,6 +2,7 @@ from flask import Flask, render_template
 from flask_debugtoolbar import DebugToolbarExtension
 import flask_sqlalchemy
 from models import User, Sit, db, connect_db
+from quote import today_quote
 
 app = Flask(__name__)
 
@@ -15,4 +16,4 @@ toolbar = DebugToolbarExtension(app)
 
 @app.route("/")
 def show_homepage():
-    return render_template("index.html")
+    return render_template("index.html", today_quote=today_quote)
