@@ -6,8 +6,9 @@
 {% block content %}
 
 <h1>This is the homepage route</h1>
-<p>Is working?</p>
-<p>{{ today_quote }}</p>
+{{ today_quote|safe }}
+
+<a class="btn btn-sm success" href="/sit">New Sit</a>
 
 
 {% endblock %}

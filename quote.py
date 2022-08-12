@@ -1,4 +1,5 @@
 import requests
+import json
 
 url = "https://zenquotes.io/api/today"
 
@@ -7,4 +8,4 @@ headers = {}
 
 response = requests.request("GET", url, headers=headers, data=payload)
 
-today_quote = response.text
+today_quote = json.loads(response.text)

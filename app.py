@@ -3,6 +3,8 @@ from flask_debugtoolbar import DebugToolbarExtension
 import flask_sqlalchemy
 from models import User, Sit, db, connect_db
 from quote import today_quote
+from forms import UserAddForm, UserLoginForm
+from sqlalchemy.exc import IntegrityError
 
 CURR_USER_KEY = "curr_user"
 
@@ -12,6 +14,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///sit_db'
 app.config['SQLALCHEMY_ECHO'] = True
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'izsekret'
+app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
 connect_db(app)
 toolbar = DebugToolbarExtension(app)
@@ -20,9 +23,9 @@ toolbar = DebugToolbarExtension(app)
 def show_homepage():
 
     if g.user:
-        return render_template("index.html", today_quote=today_quote)
+        return render_template("index.html", today_quote=today_quote[0]['h'])
     else:
-        return render_template("anon.html", today_quote=today_quote)
+        return render_template("anon.html", today_quote=today_quote[0]['h'])
 
 @app.route("/admin")
 def show_admin_page():
@@ -46,10 +49,45 @@ def do_logout():
     if CURR_USER_KEY in session:
         del session[CURR_USER_KEY]
 
-@app.route('/signup')
-def show_signup_form():
-    return render_template('signup.html')
+@app.route('/signup', methods=['GET', 'POST'])
+def show_and_handle_signup_form():
+    if CURR_USER_KEY in session:
+        del session[CURR_USER_KEY]
+    form = UserAddForm()
 
-@app.route('/login')
+    if form.validate_on_submit():
+        try: 
+            user = User.signup(first_name=form.first_name.data, last_name=form.last_name.data, email=form.email.data, username=form.username.data, password=form.password.data)
+            db.session.commit()
+        except IntegrityError as e:
+            flash("Username already taken", "alert-danger")
+            return render_template('signup.html', form=form)
+
+        do_login(user)
+
+        return redirect('/')
+    
+    else:
+        return render_template('signup.html', form=form)
+
+@app.route('/login', methods=['GET', 'POST'])
 def show_login_form():
-    return render_template('login.html')
+
+    form = UserLoginForm()
+
+    if form.validate_on_submit():
+        user = User.authenticate(form.username.data, form.password.data)
+        
+        if user:
+            do_login(user)
+            flash(f"Welcome back, {user.username}!", "alert-success")
+            return redirect('/')
+        flash("Invalid credentials.  Please check username and password and try again", "alert-danger")
+    
+    return render_template('login.html', form=form)
+
+@app.route('/logout')
+def user_logout():
+    do_logout()
+    flash("You have successfully logged out", "alert-success")
+    return redirect('/')

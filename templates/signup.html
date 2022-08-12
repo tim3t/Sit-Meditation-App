@@ -5,4 +5,18 @@
 
 {% block content %}
 <h1>Signup Form</h1>
+<p>We're so excited you have decided to take your meditation practice to the next level!</p>
+<form method="POST" id="user_add_form">
+    {{ form.hidden_tag() }}
+    {% for field in form if field.widget.input_type != 'hidden' %}
+        <p>{{field.label}} 
+        {{field}} {% for err in field.errors %} {{ err }} </p>
+        {% endfor %}
+    {% endfor %}
+    <hr>
+    <p><button>Sign Up!</button></p>
+    <a href="/">Go Back</a>
+    </form>
+
+
 {% endblock %}
