@@ -11,13 +11,13 @@
 <body>
     <nav class="navbar">
         {% if not g.user %}
-            <a href="/">Home</a>
-            <a href="/signup">Sign up</a>
             <a href="/login">Log in</a>
+            <a href="/signup">Sign up</a>
+            <a href="/">Home</a>
         {% else %}
             <a href="/">Home</a>
             <a href="/sit">New Sit</a>
-            <a href="/history">History</a>
+            <a href="/history">Your History</a>
             <a href="/logout">Log out</a>
         {% endif %}
     </nav>

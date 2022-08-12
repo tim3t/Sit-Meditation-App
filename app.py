@@ -3,7 +3,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 import flask_sqlalchemy
 from models import User, Sit, db, connect_db
 from quote import today_quote
-from forms import UserAddForm, UserLoginForm
+from forms import UserAddForm, UserLoginForm, NewSitForm
 from sqlalchemy.exc import IntegrityError
 
 CURR_USER_KEY = "curr_user"
@@ -29,8 +29,14 @@ def show_homepage():
 
 @app.route("/admin")
 def show_admin_page():
-    users = User.query.all()
-    return render_template("admin.html", users=users)
+    g.user = User.query.get(session[CURR_USER_KEY])
+    if g.user.is_admin==True:
+        users = User.query.order_by(User.id).all()
+        sits = Sit.query.all()
+        return render_template("admin.html", users=users, sits=sits)
+    else:
+        flash("You do not have admin access", "alert-danger")
+        return redirect('/')
 
 @app.before_request
 def add_user_to_g():
@@ -91,3 +97,28 @@ def user_logout():
     do_logout()
     flash("You have successfully logged out", "alert-success")
     return redirect('/')
+
+@app.route('/sit', methods=['GET', 'POST'])
+def show_and_handle_new_sit():
+
+    form = NewSitForm()
+    if form.validate_on_submit():
+        user_id = g.user.id
+        timestamp = form.datetime.data
+        sit_title = form.title.data
+        sit_body = form.body.data
+        sit_rating = form.rating.data
+
+        sit = Sit(user_id=user_id, timestamp=timestamp, sit_title=sit_title, sit_body=sit_body, sit_rating=sit_rating)
+        db.session.add(sit)
+        db.session.commit()
+        flash(f"Successfully created new Sit for {timestamp}", "alert-success")
+        return redirect('/history')
+    else:
+        return render_template('sit.html', form=form)
+
+@app.route('/history')
+def show_user_sit_history():
+    user = g.user
+    sits = Sit.query.filter_by(user_id=user.id).order_by(Sit.timestamp).all()
+    return render_template('history.html', user=user, sits=sits)

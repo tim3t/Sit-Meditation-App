@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title%}
+    New Sit Entry
+{% endblock %}
+
+{% block content %}
+<h1>New Sit Entry</h1>
+<h3>How did your meditation go today?</h3>
+<form method="POST" id="new_sit_form" class="">
+    <div>
+    {{ form.hidden_tag() }}
+    <p>{{ form.datetime.label }} {{ form.datetime(class='datepicker') }}</p>
+    <p>{{ form.duration.label }} {{ form.duration }}</p>
+    <p>{{ form.title.label }} {{ form.title(size=40) }}</p>
+    <p>{{ form.body.label }} {{ form.body(cols=40, rows=10) }}</p>
+    <p>{{ form.rating.label }} {{ form.rating }}</p>
+    </div>
+    <hr>
+    <p><button class="btn btn-primary">Log Today's Sit</button></p>
+    <a href="/">Go Back</a>
+    </form>
+{% endblock %}

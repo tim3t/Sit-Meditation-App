@@ -5,9 +5,10 @@
 
 {% block content %}
 <h1>Users List</h1>
-<ul>
+<ul style="list-style-type: none;">
 {% for user in users %}
     <li>{{user.id}}: {{user.first_name}} {{user.last_name}}, {{user.email}} </li>
+    <li>{{user.sit}}</li>
 {% endfor %}
 </ul>
 {%endblock%}

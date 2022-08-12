@@ -60,7 +60,7 @@ class Sit(db.Model):
     sit_rating = db.Column(db.Integer, nullable=False)
 
     def __repr__(self):
-        return f"Sit #{self.id}, User #{self.user_id}: {self.sit_title}, {self.timestamp}"
+        return f"Sit #{self.id}: {self.sit_title}, {self.timestamp}"
 
 
 
