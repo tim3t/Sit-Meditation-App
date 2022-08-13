@@ -54,7 +54,8 @@ class Sit(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow())
+    timestamp = db.Column(db.Date, nullable=False, default=datetime.utcnow())
+    duration = db.Column(db.Integer, nullable=False)
     sit_title = db.Column(db.Text, nullable=False)
     sit_body = db.Column(db.Text, nullable=False)
     sit_rating = db.Column(db.Integer, nullable=False)

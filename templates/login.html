@@ -4,16 +4,19 @@
 {% endblock %}
 
 {% block content %}
-<h1>Login Form</h1>
+<div class="container text-center" id="index">
+<h1 class="text-center">Login Form</h1>
+<br>
 <form method="POST" id="user_login_form">
     {{ form.hidden_tag() }}
     {% for field in form if field.widget.input_type != 'hidden' %}
         <p>{{field.label}} 
-        {{field}} {% for err in field.errors %} {{ err }} </p>
+        {{field(size=40)}} {% for err in field.errors %} {{ err }} </p>
         {% endfor %}
     {% endfor %}
     <hr>
     <p><button>Log In</button></p>
     <a href="/">Go Back</a>
     </form>
+</div>
 {% endblock %}

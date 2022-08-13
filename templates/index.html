@@ -4,11 +4,12 @@
 {% endblock %}
 
 {% block content %}
-
+<div class="container text-center" id="index">
 <h1>Sit Meditation Tracker</h1>
-{{ today_quote|safe }}
+<div class="row justify-content-center">
+<h2>{{ today_quote|safe }}</h2>
+</div>
+<a class="btn btn-lg btn-primary" href="/sit">New Sit</a>
 
-<a class="btn btn-primary" href="/sit">New Sit</a>
-
-
+</div>
 {% endblock %}

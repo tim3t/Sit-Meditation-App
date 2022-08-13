@@ -4,8 +4,9 @@
 {% endblock %}
 
 {% block content %}
+<div class="container text-center" id="index">
 <h1>Signup Form</h1>
-<p>We're so excited you have decided to take your meditation practice to the next level!</p>
+<p>We're so excited you have decided to join the ranks of Sit Trackers!</p>
 <form method="POST" id="user_add_form">
     {{ form.hidden_tag() }}
     {% for field in form if field.widget.input_type != 'hidden' %}
@@ -14,9 +15,10 @@
         {% endfor %}
     {% endfor %}
     <hr>
-    <p><button>Sign Up!</button></p>
+    <p><button class="btn btn-success">Sign Up!</button></p>
     <a href="/">Go Back</a>
     </form>
 
+</div>
 
 {% endblock %}

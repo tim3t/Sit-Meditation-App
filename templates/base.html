@@ -5,22 +5,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="static/app.css">
+    <link rel="stylesheet" href="/static/app.css">
+    
     <title>{% block title%} {% endblock %}</title>
 </head>
 <body>
-    <nav class="navbar">
+
+    <nav class="navbar fixed-top" id="navbar">
         {% if not g.user %}
             <a href="/login">Log in</a>
             <a href="/signup">Sign up</a>
             <a href="/">Home</a>
         {% else %}
             <a href="/">Home</a>
+            <a href="/tips">How To</a>
             <a href="/sit">New Sit</a>
-            <a href="/history">Your History</a>
+            <a href="/users/{{g.user.id}}/history">Your History</a>
             <a href="/logout">Log out</a>
         {% endif %}
     </nav>
+
 <div>
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
@@ -34,6 +38,8 @@
     {% endwith %}
 {% block content %}
 {% endblock %}
-<footer><em>Sit Meditation 2022</em></footer>
+<hr>
+<footer class="text-center"><small><em>Sit Meditation 2022</em></small></footer>
 </body>
+
 </html>

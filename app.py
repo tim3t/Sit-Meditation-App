@@ -5,6 +5,7 @@ from models import User, Sit, db, connect_db
 from quote import today_quote
 from forms import UserAddForm, UserLoginForm, NewSitForm
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy import desc
 
 CURR_USER_KEY = "curr_user"
 
@@ -70,7 +71,7 @@ def show_and_handle_signup_form():
             return render_template('signup.html', form=form)
 
         do_login(user)
-
+        flash(f"Welcome to Sit Meditation, {user.username}!", "alert-success")
         return redirect('/')
     
     else:
@@ -105,20 +106,57 @@ def show_and_handle_new_sit():
     if form.validate_on_submit():
         user_id = g.user.id
         timestamp = form.datetime.data
+        duration = form.duration.data
         sit_title = form.title.data
         sit_body = form.body.data
         sit_rating = form.rating.data
 
-        sit = Sit(user_id=user_id, timestamp=timestamp, sit_title=sit_title, sit_body=sit_body, sit_rating=sit_rating)
+        sit = Sit(user_id=user_id, timestamp=timestamp, duration=duration, sit_title=sit_title, sit_body=sit_body, sit_rating=sit_rating)
         db.session.add(sit)
         db.session.commit()
         flash(f"Successfully created new Sit for {timestamp}", "alert-success")
-        return redirect('/history')
+        return redirect(f'/users/{user_id}/history')
     else:
         return render_template('sit.html', form=form)
 
-@app.route('/history')
-def show_user_sit_history():
+@app.route('/users/<int:user_id>/history')
+def show_user_sit_history(user_id):
     user = g.user
-    sits = Sit.query.filter_by(user_id=user.id).order_by(Sit.timestamp).all()
-    return render_template('history.html', user=user, sits=sits)
+    sits = Sit.query.filter_by(user_id=user.id).order_by(desc(Sit.timestamp)).all()
+    return render_template('/users/history.html', user=user, sits=sits)
+
+@app.route('/users/<int:user_id>/sit/<int:sit_id>', methods=['GET', 'POST'])
+def edit_individual_sit_entry(user_id, sit_id):
+    user = g.user
+    sit = Sit.query.get_or_404(sit_id)
+    form = NewSitForm()
+    form.datetime.data = sit.timestamp
+    form.title.data = sit.sit_title
+    form.duration.data = sit.duration
+    form.body.data = sit.sit_body
+    form.rating.data = sit.sit_rating
+
+    if form.validate_on_submit():
+
+        sit.timestamp = form.datetime.data
+        sit.sit_title = form.title.data
+        sit.duration = form.duration.data
+        sit.sit_body = form.body.data
+        sit.sit_rating = form.rating.data
+        db.session.commit()
+        
+        return redirect(f'/users/{user_id}/history.html')
+
+    else:
+        return render_template('users/sitentry.html', user=user, sit=sit, form=form)
+
+@app.route('/users/<int:user_id>/sit/<int:sit_id>/delete', methods=['POST'])
+def delete_individual_sit_entry(user_id, sit_id):
+    sit = Sit.query.get_or_404(sit_id)
+    db.session.delete(sit)
+    db.session.commit()
+    return redirect(f'/users/{user_id}/history')
+
+@app.route('/tips')
+def show_sit_tips_page():
+    return render_template('tips.html')

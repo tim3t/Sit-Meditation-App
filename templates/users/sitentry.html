@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}
+    Edit Sit
+{% endblock %}
+
+{% block content %}
+<div class="container" id="index">
+    <h1 class="text-center">Edit Sit Entry</h1>
+    <h3 class="text-center">Make Edits Below and Submit</h3>
+    <div class="col-md-8">
+    <form method="POST">
+        <div class="form-group">
+        {{ form.hidden_tag() }}
+        <p>{{ form.datetime.label }} {{ form.datetime(class='datepicker') }}</p>
+        <p>{{ form.duration.label }} {{ form.duration }} </p>
+        <p>{{ form.title.label }} {{ form.title(size=40) }}</p>
+        <p>{{ form.body.label }}:</p> 
+            <p>{{ form.body(cols=40, rows=10) }}</p>
+        <p>{{ form.rating.label }} {{ form.rating }}</p>
+        </div>
+        <hr>
+        <p><button type="submit" class="btn btn-primary">Edit Sit Entry</button></p>
+        <a href="/users/{{g.user.id}}/history">Go Back</a>
+        </form>
+    </div>
+    </div>
+{% endblock %}

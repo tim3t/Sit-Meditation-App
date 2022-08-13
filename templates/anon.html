@@ -4,10 +4,14 @@
 {% endblock %}
 
 {% block content %}
-<div id="anon_bg">
-<h1>Time to Sit</h1>
-<p>Register today to take your meditation practice to the next level!</p>
-<p>{{ today_quote|safe }}</p>
-</div>
 
+<div class="container text-center" id="index">
+    <div id="anon_bg">
+<h1 class="text-center">Welcome to Sit Meditation</h1>
+<p class="text-center">Register today to take your meditation practice to the next level!</p>
+<div class="row justify-content-center">
+<h2>{{ today_quote|safe }}</h2>
+</div>
+</div>
+</div>
 {% endblock %}
