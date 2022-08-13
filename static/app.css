@@ -9,6 +9,23 @@
 	z-index: -1;
 }
 
+#hero_logo {
+	position: absolute;
+	top: 45%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	height: 90%;
+	border-radius: 50%;
+	margin-top: 5px;
+}
+#hero_logo_login {
+	position: relative;
+	top: 45%;
+	transform: translate(-50%, -50%);
+	height: 90%;
+	border-radius: 50%;
+	margin-top: 5px;
+}
 #navbar {
 	background-color: rgb(49, 180, 209);
 	height: 75px;
@@ -54,10 +71,15 @@ h2 {
 }
 
 .quote {
-	position: absolute;
+	position: fixed;
 	top: 45%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	color: rgb(117, 188, 232);
 	text-shadow: 2px 2px 2px grey;
+}
+
+#edit_acct_btn {
+	display: flex;
+	justify-content: center;
 }

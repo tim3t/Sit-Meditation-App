@@ -3,7 +3,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 import flask_sqlalchemy
 from models import User, Sit, db, connect_db
 from quote import today_quote
-from forms import UserAddForm, UserLoginForm, NewSitForm
+from forms import UserAddForm, UserLoginForm, NewSitForm, UserEditForm, EditSitForm
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy import desc
 
@@ -125,17 +125,38 @@ def show_user_sit_history(user_id):
     sits = Sit.query.filter_by(user_id=user.id).order_by(desc(Sit.timestamp)).all()
     return render_template('/users/history.html', user=user, sits=sits)
 
+@app.route('/users/<int:user_id>/edit', methods=['GET', 'POST'])
+def edit_user_account(user_id):
+    if not g.user:
+        flash("Access unauthorized", "alert-danger")
+        return redirect('/')
+    
+    user = g.user
+    form = UserEditForm(obj=user)
+
+    if form.validate_on_submit():
+        if User.authenticate(user.username, form.password.data):
+            user.username = form.username.data
+            user.first_name = form.first_name.data
+            user.last_name = form.last_name.data
+            user.email = form.email.data
+
+            db.session.commit()
+            return redirect(f"/users/{user_id}/history")
+        flash("Incorrect password; please try again", 'alert-danger')
+
+    return render_template('users/edit.html', form=form, user_id=user.id)
+
 @app.route('/users/<int:user_id>/sit/<int:sit_id>', methods=['GET', 'POST'])
 def edit_individual_sit_entry(user_id, sit_id):
+    if not g.user:
+        flash("Access unauthorized", "alert-danger")
+        return redirect('/')
+    
     user = g.user
     sit = Sit.query.get_or_404(sit_id)
-    form = NewSitForm()
-    form.datetime.data = sit.timestamp
-    form.title.data = sit.sit_title
-    form.duration.data = sit.duration
-    form.body.data = sit.sit_body
-    form.rating.data = sit.sit_rating
-
+    form = EditSitForm(obj=sit)
+    
     if form.validate_on_submit():
 
         sit.timestamp = form.datetime.data
@@ -145,10 +166,10 @@ def edit_individual_sit_entry(user_id, sit_id):
         sit.sit_rating = form.rating.data
         db.session.commit()
         
-        return redirect(f'/users/{user_id}/history.html')
+        return redirect(f'/users/{user_id}/history')
 
     else:
-        return render_template('users/sitentry.html', user=user, sit=sit, form=form)
+        return render_template('users/edit_sit.html', user=user, sit=sit, form=form)
 
 @app.route('/users/<int:user_id>/sit/<int:sit_id>/delete', methods=['POST'])
 def delete_individual_sit_entry(user_id, sit_id):
