@@ -19,8 +19,9 @@
 	margin-top: 5px;
 }
 #hero_logo_login {
-	position: relative;
+	position: absolute;
 	top: 45%;
+	right: 92%;
 	transform: translate(-50%, -50%);
 	height: 90%;
 	border-radius: 50%;
@@ -39,7 +40,7 @@
 	justify-content: right;
 }
 
-.navbar a {
+.nav-link {
 	float: right;
 	color: white;
 	background-attachment: fixed;
@@ -61,6 +62,14 @@ h2 {
 	margin-top: 40px;
 }
 
+.card-title {
+	margin-left: 10px;
+}
+
+.card-subtitle {
+	margin-left: 12px;
+}
+
 .card-body a {
 	display: inline-block;
 	margin-bottom: 5px;
@@ -71,7 +80,7 @@ h2 {
 }
 
 .quote {
-	position: fixed;
+	position: absolute;
 	top: 45%;
 	left: 50%;
 	transform: translate(-50%, -50%);

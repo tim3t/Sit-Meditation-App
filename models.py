@@ -24,6 +24,9 @@ class User(db.Model):
 
     def __repr__(self):
         return f"User #{self.id}: {self.username}, {self.email}, {self.first_name} {self.last_name}"
+        
+    def sit_count(self):
+        return len(list(self.sit))
 
     @classmethod
     def signup(cls, username, password, first_name, last_name, email):

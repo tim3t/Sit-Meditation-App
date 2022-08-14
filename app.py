@@ -95,8 +95,9 @@ def show_login_form():
 
 @app.route('/logout')
 def user_logout():
+    user=g.user
     do_logout()
-    flash("You have successfully logged out", "alert-success")
+    flash(f"{user.username}, you have successfully logged out", "alert-success")
     return redirect('/')
 
 @app.route('/sit', methods=['GET', 'POST'])

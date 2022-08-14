@@ -13,14 +13,17 @@
 
     <nav class="navbar fixed-top" id="navbar">
         {% if not g.user %}
-            <img src="/static/Screen Shot 2022-08-13 at 7.12.59 PM.png" id="hero_logo">
+            <a href="/">
+                <img src="/static/Screen Shot 2022-08-13 at 7.12.59 PM.png" id="hero_logo">
+            </a>
         {% else %}
-            <img src="/static/Screen Shot 2022-08-13 at 7.12.59 PM.png" id="hero_logo_login">
-            <a href="/">Home</a>
-            <a href="/tips">How To</a>
-            <a href="/sit">New Sit</a>
-            <a href="/users/{{g.user.id}}/history">Your History</a>
-            <a href="/logout">Log out</a>
+            <a href="/">
+                <img src="/static/Screen Shot 2022-08-13 at 7.12.59 PM.png" id="hero_logo_login">
+            </a>
+            <a href="/tips" class="nav-link">How To</a>
+            <a href="/sit" class="nav-link">Log Sit</a>
+            <a href="/users/{{g.user.id}}/history" class="nav-link">Your History</a>
+            <a href="/logout" class="nav-link">Log out</a>
         {% endif %}
     </nav>
 
