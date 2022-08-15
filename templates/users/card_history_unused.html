@@ -1,0 +1,25 @@
+
+
+    {% else %}
+    <div class="container">
+        <div class="row">
+        {% for sit in sits %}
+        <br>
+            <div class="col-4">
+            <div class="card">
+                <h5 class="card-title"><strong>{{sit.sit_title}}</strong></h5>
+                <h6 class="card-subtitle">
+                <li>Date: {{ sit.timestamp }} Rating: {{ sit.sit_rating }}</li>
+                <li>Duration: {{sit.duration}} minutes</li></h6>
+                <div class="card-body">
+                <li>{{sit.sit_body}}</li>
+                <br>
+                    <a class="btn btn-sm btn-outline-primary" href="/users/{{user.id}}/sit/{{sit.id}}">Edit</a>
+                    <form method="POST" action="/users/{{user.id}}/sit/{{sit.id}}/delete">
+                    <button class="btn btn-sm btn-outline-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+            <br>
+        </div>
+        {% endfor %}

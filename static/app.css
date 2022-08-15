@@ -1,12 +1,24 @@
+body {
+	font-family: 'Montserrat', sans-serif;
+}
+
 #anon_bg {
 	width: 941.55px;
 	height: 500px;
-	opacity: 0.2;
+	opacity: 0.4;
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
 	border-radius: 20px;
 	z-index: -1;
+}
+
+#how_to_img {
+	width: 500px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	border-radius: 20px;
 }
 
 #hero_logo {
@@ -20,6 +32,7 @@
 }
 #hero_logo_login {
 	position: absolute;
+	display: flex;
 	top: 45%;
 	right: 92%;
 	transform: translate(-50%, -50%);
@@ -28,10 +41,22 @@
 	margin-top: 5px;
 }
 #navbar {
-	background-color: rgb(49, 180, 209);
+	background-image: linear-gradient(to right, rgb(49, 180, 209), rgb(28, 32, 145));
 	height: 75px;
 	position: sticky;
 	margin-bottom: 15px;
+}
+
+#navbar > p {
+	position: absolute;
+	top: 56%;
+	right: 85%;
+	color: rgba(255, 255, 255, 0.7);
+}
+
+.anon_btn {
+	position: relative;
+	bottom: 10rem;
 }
 
 .navbar {
@@ -80,15 +105,24 @@ h2 {
 }
 
 .quote {
-	position: absolute;
-	top: 45%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	color: rgb(117, 188, 232);
+	display: inline-block;
+	position: fixed;
+	top: 15rem;
+	width: 40rem;
 	text-shadow: 2px 2px 2px grey;
+	color: rgb(63, 133, 177);
 }
 
 #edit_acct_btn {
 	display: flex;
 	justify-content: center;
+}
+
+form > button {
+	display: inline-block;
+	border: none;
+}
+
+form > a {
+	display: inline-block;
 }

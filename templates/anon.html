@@ -8,17 +8,18 @@
 <div class="container text-center" id="index">
 <div>
 
-<h1 class="text-center">Welcome to Sit Meditation</h1>
+<h1 class="text-center" >Welcome to Sit Meditation</h1>
 <p class="text-center">Register today to take your meditation practice to the next level!</p>
 <div class="row justify-content-center">
     <img src="/static/jared-rice-xce530fBHrk-unsplash.jpg" id="anon_bg">
     <div class="quote">
 <h2>{{ today_quote|safe }}</h2>
-<br>
-<a href="/login" class="btn btn-lg btn-primary">Log in</a>
-<a href="/signup" class="btn btn-lg btn-primary">Sign up</a>
+
 </div>
 </div>
+<a href="/login" class="btn btn-lg btn-primary anon_btn">Log in</a>
+<a href="/signup" class="btn btn-lg btn-primary anon_btn">Sign up</a>
+
 </div>
 </div>
 {% endblock %}

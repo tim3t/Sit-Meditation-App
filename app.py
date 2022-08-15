@@ -22,7 +22,7 @@ toolbar = DebugToolbarExtension(app)
 
 @app.route("/")
 def show_homepage():
-
+    
     if g.user:
         return render_template("index.html", today_quote=today_quote[0]['h'])
     else:
@@ -32,9 +32,10 @@ def show_homepage():
 def show_admin_page():
     g.user = User.query.get(session[CURR_USER_KEY])
     if g.user.is_admin==True:
+        admin = g.user
         users = User.query.order_by(User.id).all()
         sits = Sit.query.all()
-        return render_template("admin.html", users=users, sits=sits)
+        return render_template("admin.html", users=users, admin=admin, sits=sits)
     else:
         flash("You do not have admin access", "alert-danger")
         return redirect('/')
@@ -102,7 +103,7 @@ def user_logout():
 
 @app.route('/sit', methods=['GET', 'POST'])
 def show_and_handle_new_sit():
-
+    user = g.user
     form = NewSitForm()
     if form.validate_on_submit():
         user_id = g.user.id
@@ -118,7 +119,7 @@ def show_and_handle_new_sit():
         flash(f"Successfully created new Sit for {timestamp}", "alert-success")
         return redirect(f'/users/{user_id}/history')
     else:
-        return render_template('sit.html', form=form)
+        return render_template('sit.html', form=form, user=user)
 
 @app.route('/users/<int:user_id>/history')
 def show_user_sit_history(user_id):
@@ -158,6 +159,7 @@ def edit_individual_sit_entry(user_id, sit_id):
     sit = Sit.query.get_or_404(sit_id)
     form = EditSitForm(obj=sit)
     
+
     if form.validate_on_submit():
 
         sit.timestamp = form.datetime.data
@@ -181,4 +183,5 @@ def delete_individual_sit_entry(user_id, sit_id):
 
 @app.route('/tips')
 def show_sit_tips_page():
-    return render_template('tips.html')
+    user = g.user
+    return render_template('tips.html', user=user)
