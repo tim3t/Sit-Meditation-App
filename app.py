@@ -34,12 +34,11 @@ def show_admin_page():
     
     if g.user:
         g.user = User.query.get_or_404(session[CURR_USER_KEY])
-    
         if g.user.is_admin==True:
-            admin = g.user
+            user = g.user
             users = User.query.order_by(User.id).all()
             sits = Sit.query.all()
-            return render_template("admin.html", users=users, admin=admin, sits=sits)
+            return render_template("admin.html", users=users, sits=sits, user=user)
         else:
             flash("You do not have admin access", "alert-danger")
             return redirect('/')
@@ -111,7 +110,8 @@ def user_logout():
 
 @app.route('/timer')
 def show_sit_timer():
-    return render_template('/timer.html')
+    user = g.user
+    return render_template('/timer.html', user=user)
 
 @app.route('/sit', methods=['GET', 'POST'])
 def show_and_handle_new_sit():
@@ -159,7 +159,7 @@ def edit_user_account(user_id):
             return redirect(f"/users/{user_id}/history")
         flash("Incorrect password; please try again", 'alert-danger')
 
-    return render_template('users/edit.html', form=form, user_id=user.id)
+    return render_template('users/edit.html', form=form, user_id=user.id, user=user)
 
 @app.route('/users/<int:user_id>/sit/<int:sit_id>', methods=['GET', 'POST'])
 def edit_individual_sit_entry(user_id, sit_id):

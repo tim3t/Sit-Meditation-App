@@ -4,20 +4,21 @@
 {% endblock %}
 
 {% block content %}
-<div class="container" id="index">
+<div class="container text-center" id="index">
     <h1 class="text-center">Edit Your Sit Account</h1>
     <h3 class="text-center">Make Edits Below and Submit</h3>
-    <div class="col-md-8">
-<form method="POST" id="user_edit_form">
+    <div class="container">
+<form method="POST" id="user_edit_form" class="form-group">
     {{ form.hidden_tag() }}
     {% for field in form if field.widget.input_type != 'hidden' %}
-        <p>{{field.label}} 
-        {{field}} {% for err in field.errors %} {{ err }} </p>
+        <p class="text-center">{{field.label}} 
+        {{field(class='form-control text-center') }} {% for err in field.errors %} {{ err }} </p>
         {% endfor %}
     {% endfor %}
     <hr>
     <p><button class="btn btn-success">Edit Account</button></p>
     <a href="/users/{{user_id}}/history">Go Back</a>
     </form>
-
+</div>
+</div>
 {% endblock %}

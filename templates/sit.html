@@ -7,21 +7,24 @@
 <div class="container" id="index">
 <h1 class="text-center">Log Sit Entry</h1>
 <h3 class="text-center">How did your meditation go today?</h3>
-<div class="col-md-8">
+<br>    
+<div class="container">
 <form method="POST" id="new_sit_form" class="">
-    <div class="form-group">
+    <div class="form-group text-center">
     {{ form.hidden_tag() }}
-    <p>{{ form.datetime.label }} {{ form.datetime(class='datepicker') }}</p>
-    <p>{{ form.duration.label }} {{ form.duration }} </p>
-    <p>{{ form.title.label }} {{ form.title(size=40) }}</p>
+    <p>{{ form.datetime.label }} {{ form.datetime(class='datepicker text-center') }}</p>
+    <p>{{ form.duration.label }} {{ form.duration(class='text-center') }} </p>
+    <p>{{ form.title.label }} {{ form.title(class = 'form-control text-center') }}</p>
     <p>{{ form.body.label }}:</p> 
-        <p>{{ form.body(cols=40, rows=10) }}</p>
-    <p>{{ form.rating.label }} {{ form.rating }}</p>
+        <p>{{ form.body(cols=40, rows=10, class='form-control text-center') }}</p>
+    <p>{{ form.rating.label }} {{ form.rating(class='text-center') }}</p>
     </div>
-    <hr>
+    <br>
+    <div class="container text-center">
     <p><button class="btn btn-primary">Log Today's Sit</button></p>
     <a href="/">Go Back</a>
     </form>
+</div>
 </div>
 </div>
 {% endblock %}

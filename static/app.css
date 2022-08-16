@@ -42,6 +42,12 @@ body {
 	border-radius: 50%;
 	margin-top: 5px;
 }
+
+#prayer {
+	border-radius: 10%;
+	box-shadow: 3px 3px 3px grey;
+}
+
 #navbar {
 	background-image: linear-gradient(to right, rgb(49, 180, 209), rgb(28, 32, 145));
 	height: 75px;
@@ -89,23 +95,6 @@ h2 {
 	margin-top: 40px;
 }
 
-.card-title {
-	margin-left: 10px;
-}
-
-.card-subtitle {
-	margin-left: 12px;
-}
-
-.card-body a {
-	display: inline-block;
-	margin-bottom: 5px;
-}
-
-.card-body form {
-	float: right;
-}
-
 .quote {
 	display: inline-block;
 	position: fixed;
@@ -118,6 +107,10 @@ h2 {
 #edit_acct_btn {
 	display: flex;
 	justify-content: center;
+}
+
+.form-group {
+	text-align: center;
 }
 
 form > button {
@@ -147,4 +140,8 @@ form > a {
 	gap: 30px;
 	align-items: center;
 	justify-content: center;
+}
+
+#login_status {
+	color: green;
 }
