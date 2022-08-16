@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, flash, session, g
+from flask import Flask, render_template, redirect, flash, session, g, abort
 from flask_debugtoolbar import DebugToolbarExtension
 import flask_sqlalchemy
 from models import User, Sit, db, connect_db
@@ -30,15 +30,22 @@ def show_homepage():
 
 @app.route("/admin")
 def show_admin_page():
-    g.user = User.query.get(session[CURR_USER_KEY])
-    if g.user.is_admin==True:
-        admin = g.user
-        users = User.query.order_by(User.id).all()
-        sits = Sit.query.all()
-        return render_template("admin.html", users=users, admin=admin, sits=sits)
+    
+    if g.user:
+        g.user = User.query.get_or_404(session[CURR_USER_KEY])
+    
+        if g.user.is_admin==True:
+            admin = g.user
+            users = User.query.order_by(User.id).all()
+            sits = Sit.query.all()
+            return render_template("admin.html", users=users, admin=admin, sits=sits)
+        else:
+            flash("You do not have admin access", "alert-danger")
+            return redirect('/')
     else:
-        flash("You do not have admin access", "alert-danger")
-        return redirect('/')
+        abort(404)
+
+
 
 @app.before_request
 def add_user_to_g():
@@ -100,6 +107,10 @@ def user_logout():
     do_logout()
     flash(f"{user.username}, you have successfully logged out", "alert-success")
     return redirect('/')
+
+@app.route('/timer')
+def show_sit_timer():
+    return render_template('/timer.html')
 
 @app.route('/sit', methods=['GET', 'POST'])
 def show_and_handle_new_sit():
@@ -185,3 +196,7 @@ def delete_individual_sit_entry(user_id, sit_id):
 def show_sit_tips_page():
     user = g.user
     return render_template('tips.html', user=user)
+
+@app.errorhandler(404)
+def page_not_found(error):
+   return render_template('404.html', title = '404'), 404

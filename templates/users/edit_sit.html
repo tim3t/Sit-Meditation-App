@@ -5,31 +5,20 @@
 
 {% block content %}
 <div class="container" id="index">
-    <div class="row">
-        <div class = "col-6">
-            <h1 class="text-center">Current Entry</h1>
-            <h3 class="text-center">Review for Edits</h3>
-            <br>
-            <p>{{form.datetime.label}}: {{sit.timestamp}}</p>
-            <p>{{form.duration.label}}: {{sit.duration}}</p>
-            <p>{{form.title.label}}: {{sit.sit_title}}</p>
-            <p style="width: 60%;">{{form.body.label}}: {{sit.sit_body}}</p>
-            <p>{{form.rating.label}}: {{sit.sit_rating}}</p>
-        </div>
 
-    <div class="col-6">
+    <div class="text-center">
     <h1 class="text-center">Edit Current Entry</h1>
     <h3 class="text-center">Make Edits Below and Submit</h3>
         <br>
     <form method="POST">
         <div class="form-group">
         {{ form.hidden_tag() }}
-        <p>{{ form.datetime.label }} {{ form.datetime(class='datepicker') }}</p>
+        <p>{{ form.datetime.label }} {{ form.datetime(class='datepicker', value=sit.timestamp) }}</p>
         <p>{{ form.duration.label }} {{ form.duration }} </p>
-        <p>{{ form.title.label }} {{ form.title(size=40) }}</p>
+        <p>{{ form.title.label }} {{ form.title(size=40, value=sit.sit_title)}}</p>
         <p>{{ form.body.label }}:</p> 
-            <p>{{ form.body(cols=40, rows=10) }}</p>
-        <p>{{ form.rating.label }} {{ form.rating }}</p>
+            <p>{{ form.body(cols=40, rows=10, value=sit.sit_body)}}</p>
+        <p>{{ form.rating.label }} {{ form.rating(value=sit.rating) }}</p>
         </div>
         <hr>
         <p><button type="submit" class="btn btn-primary">Edit Sit Entry</button></p>

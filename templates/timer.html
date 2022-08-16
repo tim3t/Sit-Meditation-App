@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}
+    Sit Timer
+{% endblock %}
+{% block content %}
+<h1 class="text-center">Sit Timer</h1>
+<h4 class="text-center">How long do you want to Sit today?</h4>
+<br>
+<div class="text-center">
+<form id="timer_form">
+<label for="timer_picker" class="text-center">Duration (in minutes)</label>
+    <input type="number" id="timer_picker">
+    <input type="submit" id="timer_submit" value="Set Timer">
+</form>
+</div>
+<br>
+<div class="timer text-center">
+<div>
+    <span class="count-digit">3</span>
+    <span class="count-digit">0</span>
+    <span class="separator">:</span>
+    <span class="count-digit">0</span>
+    <span class="count-digit">0</span>
+ </div>
+ <div class="options">
+    <button id="stop-timer">
+      <img src="https://img.icons8.com/ios-glyphs/30/000000/pause--v1.png" />
+    </button>
+    <button id="start-timer">
+      <img src="https://img.icons8.com/ios-glyphs/30/000000/play--v1.png" />
+    </button>
+    <button id="reset-timer">
+      <img src="https://img.icons8.com/ios-glyphs/30/000000/stop.png" />
+    </button>
+</div>
+</div>
+<audio id="alarm_audio"></audio>
+<br>
+<div class="text-center">
+<p class="text-center">All done? Click below to log this Sit!</p>
+<a class="btn btn-lg btn-primary" href="/sit">New Sit</a>
+</div>
+{% endblock %}
