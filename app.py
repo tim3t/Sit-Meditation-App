@@ -24,7 +24,8 @@ toolbar = DebugToolbarExtension(app)
 def show_homepage():
     
     if g.user:
-        return render_template("index.html", today_quote=today_quote[0]['h'])
+        user = g.user
+        return render_template("index.html", today_quote=today_quote[0]['h'], user=user)
     else:
         return render_template("anon.html", today_quote=today_quote[0]['h'])
 

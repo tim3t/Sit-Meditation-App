@@ -47,7 +47,11 @@
 {% block content %}
 {% endblock %}
 <hr>
-<footer class="text-center"><small><em>Sit Meditation 2022</em></small></footer>
+<footer class="text-center"><small><em>Sit Meditation 2022 
+    {% if g.user %}
+     | You are logged in as {{user.username}}
+{% endif %}
+</em></small></footer>
 </body>
 
 </html>
