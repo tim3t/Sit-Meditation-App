@@ -4,10 +4,10 @@ const countContainer = document.querySelectorAll('.count-digit');
 const startAction = document.getElementById('start-timer');
 const stopAction = document.getElementById('stop-timer');
 const resetAction = document.getElementById('reset-timer');
-const timerPicker = document.getElementById('timer_picker');
 const form = document.getElementById('timer_form');
+const defaultValue = document.getElementById('timer_picker');
 
-let countDownTime = 30 * 60;
+let countDownTime = defaultValue;
 let timerID;
 let isStopped = true;
 const timeoutAudio = document.getElementById('alarm_audio');
@@ -40,7 +40,7 @@ const stopTimer = () => {
 
 const resetTimer = () => {
 	stopTimer();
-	countDownTime = countDownTime;
+	countDownTime = form.elements['timer_picker'].value * 60;
 	renderTime();
 };
 
@@ -50,6 +50,13 @@ timeoutAudio.load();
 startAction.onclick = startTimer;
 resetAction.onclick = resetTimer;
 stopAction.onclick = stopTimer;
+
+function handle_timer_form(e) {
+	e.preventDefault();
+	countDownTime = form.elements['timer_picker'].value * 60;
+	renderTime();
+}
+form.addEventListener('submit', handle_timer_form);
 
 const renderTime = () => {
 	const time = findTimeString();
