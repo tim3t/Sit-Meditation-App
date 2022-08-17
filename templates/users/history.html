@@ -49,7 +49,18 @@
         <td>{{sit.sit_title}}</td>
         <td>{{sit.duration}} mins</td>
         <td>{{sit.sit_body}}</td>
-        <td>{{sit.sit_rating}}</td>
+        <td>{% if sit.sit_rating == 1 %}
+                Poor
+            {% elif sit.sit_rating == 2 %}
+                Fair
+            {% elif sit.sit_rating == 3 %}
+                Okay
+            {% elif sit.sit_rating == 4 %}
+                Good
+            {% elif sit.sit_rating == 5 %}
+                Great
+            {% endif %}
+        </td>
         <td><a class="fa-solid fa-pencil" href="/users/{{user.id}}/sit/{{sit.id}}"></a>
             <form method="POST" action="/users/{{user.id}}/sit/{{sit.id}}/delete">
             <button class="fa-solid fa-trash"></button>

@@ -16,8 +16,9 @@
         <p>{{ form.datetime.label }} {{ form.datetime(class='datepicker', value=sit.timestamp) }}</p>
         <p>{{ form.duration.label }} {{ form.duration }} </p>
         <p>{{ form.title.label }} {{ form.title(size=40, value=sit.sit_title)}}</p>
-        <p>{{ form.body.label }}:</p> 
-            <p>{{ form.body(cols=40, rows=10, value=sit.sit_body)}}</p>
+        <p>{{ form.body.label }}:</p>
+        {% set f = form.body.process_data(sit.sit_body) %}
+             <p>{{ form.body(cols=40, rows=10) }}</p>
         <p>{{ form.rating.label }} {{ form.rating(value=sit.rating) }}</p>
         </div>
         <hr>
