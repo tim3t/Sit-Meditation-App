@@ -5,14 +5,18 @@ from models import User, Sit, db, connect_db
 from quote import today_quote
 from forms import UserAddForm, UserLoginForm, NewSitForm, UserEditForm, EditSitForm
 from sqlalchemy.exc import IntegrityError
-from sqlalchemy import desc
+from sqlalchemy import desc, create_engine
 import os
 
 CURR_USER_KEY = "curr_user"
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL'.replace("postgres://", "postgresql://", 1), 'postgresql:///sit_db')
+uri = os.environ.get('DATABASE_URL')
+if uri.startswith("postgres://"):
+    uri = uri.replace("postgres://", "postgresql://")
+engine = create_engine(uri, echo=True)
+app.config['SQLALCHEMY_DATABASE_URI'] = (uri, 'postgresql:///sit_db')
 app.config['SQLALCHEMY_ECHO'] = True
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'izsekret')
