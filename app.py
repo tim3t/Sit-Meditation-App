@@ -6,17 +6,16 @@ from quote import today_quote
 from forms import UserAddForm, UserLoginForm, NewSitForm, UserEditForm, EditSitForm
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy import desc, create_engine
-import os
+import os, re
 
 CURR_USER_KEY = "curr_user"
 
 app = Flask(__name__)
 
-uri = os.environ.get('DATABASE_URL')
+uri = os.environ.get('DATABASE_URL', 'postgresql:///sit_db')
 if uri.startswith("postgres://"):
-    uri = uri.replace("postgres://", "postgresql://")
-engine = create_engine(uri, echo=True)
-app.config['SQLALCHEMY_DATABASE_URI'] = (uri, 'postgresql:///sit_db')
+    uri = uri.replace("postgres://", "postgresql://", 1)
+app.config['SQLALCHEMY_DATABASE_URI'] = uri
 app.config['SQLALCHEMY_ECHO'] = True
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'izsekret')
