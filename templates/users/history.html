@@ -37,18 +37,18 @@
         <thead class="thead-light">
         <th>Date</th>
         <th>Title</th>
-        <th>Duration</th>
+        <th class="duration">Duration</th>
         <th>Sit Entry</th>
         <th>Rating</th>
-        <th>Edit/Delete</th>
+        <th class="edit_delete">Edit / Delete</th>
         </thead>
     </tr>
 {% for sit in sits %}
     <tr>
         <td>{{sit.timestamp}}</td>
         <td>{{sit.sit_title}}</td>
-        <td>{{sit.duration}} mins</td>
-        <td>{{sit.sit_body}}</td>
+        <td class="duration">{{sit.duration}} mins</td>
+        <td class="sit_body">{{sit.sit_body}}</td>
         <td>{% if sit.sit_rating == 1 %}
                 Poor
             {% elif sit.sit_rating == 2 %}
